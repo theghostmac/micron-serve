@@ -17,4 +17,10 @@ func main() {
 		}
 		fmt.Fprintf(write, "Hello %s", d)
 	})
+
+	http.HandleFunc("/goodbye", func(http.ResponseWriter, *http.Request){
+		log.Println("Goodbye world")
+	})
+
+	http.ListenAndServe(":8080", nil)
 }
