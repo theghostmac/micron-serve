@@ -8,19 +8,22 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", func(write http.ResponseWriter, request *http.Request) {
-		log.Println("hello world!")
+	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		log.Println("server is running...")
 		d, err := ioutil.ReadAll(request.Body)
 		if err != nil {
-			http.Error(write, "Oops", http.StatusBadRequest)
+			http.Error(writer, "Oops", http.StatusBadRequest)
 			return
 		}
-		fmt.Fprintf(write, "Hello %s", d)
+		fmt.Fprintf(writer, "Hello there %s", d)
 	})
 
-	http.HandleFunc("/goodbye", func(http.ResponseWriter, *http.Request){
-		log.Println("Goodbye world")
+	http.HandleFunc("/goodbye", func(http.ResponseWriter, *http.Request) {
+		log.Println("goodbye API fetched...")
 	})
 
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		return
+	}
 }
