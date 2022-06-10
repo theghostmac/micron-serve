@@ -1,18 +1,15 @@
 package main
 
 import (
+	"github.com/theghostmac/micron-serve/handlers"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
-	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-
-	})
-
-	http.HandleFunc("/goodbye", func(http.ResponseWriter, *http.Request) {
-		log.Println("goodbye API fetched...")
-	})
+	logger := log.New(os.Stdout, "product-api", log.LstdFlags)
+	helloHandler := handlers.NewHello(logger)
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
