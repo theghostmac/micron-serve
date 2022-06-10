@@ -15,13 +15,12 @@ func NewHello(l *log.Logger) *Hello {
 	return &Hello{l}
 }
 
-func (h *Hello) ServeHTTP(rw http.ResponseWriter, ref *http.Request) {
-	log.Println("Hello world")
-	d, err := ioutil.ReadAll(ref.Body)
+func (h *Hello) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+	h.l.Println("server is running...")
+	d, err := ioutil.ReadAll(request.Body)
 	if err != nil {
-		http.Error(rw, "Oops", http.StatusBadRequest)
+		http.Error(writer, "Oops", http.StatusBadRequest)
 		return
 	}
-
-	fmt.Fprintf(rw, "Hello %s", d)
+	fmt.Fprintf(writer, "Hello there %s", d)
 }
